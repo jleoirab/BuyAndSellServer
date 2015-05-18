@@ -1,0 +1,1 @@
+json.(nation, :id, :name)
