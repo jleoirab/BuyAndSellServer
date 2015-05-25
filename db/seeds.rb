@@ -5,82 +5,45 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+# Fantasy environment for testing. Don't laugh at my lack of creativity. LOL!
 states = [{
 		name: 'Abuja'
-	},{
-		name: 'Abia'
-	}, {
-		name: 'Adamawa'
-	}, {
-		name: 'Akwa Ibom'
-	}, {
-		name: 'Anambra'
-	}, {
-		name: 'Bauchi'
-	}, {
-		name: 'Bayelsa'
-	}, {
-		name: 'Benue'
-	}, {
-		name: 'Borno'
-	}, {
-		name: 'Cross River'
-	}, {
-		name: 'Delta'
-	}, {
-		name: 'Ebonyi'
-	}, {
-		name: 'Edo'
-	}, {
-		name: 'Ekiti'
-	}, {
-		name: 'Enugu'
-	}, {
-		name: 'Gombe'
-	}, {
-		name: 'Imo'
-	}, {
-		name: 'Jigawa'
-	}, {
-		name: 'Kaduna'
-	}, {
-		name: 'Kano'
-	}, {
-		name: 'Katsina'
-	}, {
-		name: 'Kebbi'
-	}, {
-		name: 'Kogi'
-	}, {
-		name: 'Kwara'
 	}, {
 		name: 'Lagos'
-	}, {
-		name: 'Nasarawa'
-	}, {
-		name: 'Niger'
-	}, {
-		name: 'Ogun'
-	}, {
-		name: 'Ondo'
-	}, {
-		name: 'Osun'
-	}, {
-		name: 'Oyo'
-	}, {
-		name: 'Plateau'
-	}, {
-		name: 'Rivers'
-	}, {
-		name: 'Sokoto'
-	}, {
-		name: 'Taraba'
-	}, {
-		name: 'Yobe'
-	}, {
-		name: 'Zamfara'
 	}
 ]
+
+
+towns_a = [{
+		name: 'Gwari'
+	}, {
+		name: 'Gwarimpa'
+	}, {
+		name: 'DownTown'
+	}, {
+		name: 'Center City'
+	},{
+		name: 'Damala'
+	}
+]
+
+towns_b = [{
+		name: 'Ikeja'
+	}, {
+		name: 'Victoria Island'
+	}, {
+		name: 'Ikoyi'
+	}, {
+		name: 'Ojuelgba'
+	},{
+		name: 'Nameless'
+	}
+]
+
+
 nation = Nation.create(name: 'Nigeria')
 nation.states.create(states)
+nation.states.first.towns.create(towns_a)
+nation.states.second.towns.create(towns_b)
 

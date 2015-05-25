@@ -1,0 +1,1 @@
+json.ad @ad partial: 'ad' as: :ad

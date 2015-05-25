@@ -1,8 +1,15 @@
 class TownsController < ApplicationController
 	
 	def index
-		@state = State.find(params[:state_id])
-		@towns = @state.towns
+		@towns = []
+		if params[:state] && params[:state] != ""
+			nation_name = params[:nation]
+			state_name = params[:state]
+			state = Nation.find_by_name(nation_name)
+					.states.find_by_name(state_name)
+
+			@towns = state.towns.all
+		end
 	end
 
 	def show

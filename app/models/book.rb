@@ -1,3 +1,3 @@
 class Book < ActiveRecord::Base
-	has_many :ads, as: :category
+	has_one :ad, as: :category
 end

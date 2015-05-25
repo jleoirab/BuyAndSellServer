@@ -1,10 +1,16 @@
 Rails.application.routes.draw do
+
   resources :nations, only: [:index] do
-    resources :states do
-      resources :towns
+    resources :states, only: [:index] do
+      resources :towns, only: [:index] do
+        resources :ads
+      end
     end
   end
 
+  get 'states' => 'states#index'
+  get 'towns_for_state' => 'towns#index'
+  post 'create_ad' => 'ads#create'
   root 'home#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

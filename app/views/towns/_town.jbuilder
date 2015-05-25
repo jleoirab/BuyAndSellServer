@@ -1,0 +1,1 @@
+json.(town, :id, :name)

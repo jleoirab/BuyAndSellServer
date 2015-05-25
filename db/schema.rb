@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150518184830) do
+ActiveRecord::Schema.define(version: 20150524190310) do
 
   create_table "ads", force: true do |t|
     t.integer  "town_id"
@@ -21,8 +21,11 @@ ActiveRecord::Schema.define(version: 20150518184830) do
     t.string   "creator_email"
     t.string   "creator_phone"
     t.text     "description"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.decimal  "price",         precision: 10, scale: 2
+    t.string   "name"
+    t.string   "address"
   end
 
   add_index "ads", ["category_type", "category_id"], name: "index_ads_on_category_type_and_category_id"
@@ -30,9 +33,8 @@ ActiveRecord::Schema.define(version: 20150518184830) do
 
   create_table "books", force: true do |t|
     t.string   "name"
-    t.decimal  "price",      precision: 10, scale: 2
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "nations", force: true do |t|

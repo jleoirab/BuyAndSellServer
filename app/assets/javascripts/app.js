@@ -7,6 +7,10 @@ huDeySell = angular.module('HuDeySell', [
 		templateUrl: 'index.html',
 		controller: 'AppController'
 	})
+	.when('/create-ad', {
+		templateUrl: 'new-ad.html',
+		controller: 'NewAdController'
+	})
 	.otherwise({
 		redirectTo: '/'
 	});
@@ -14,4 +18,5 @@ huDeySell = angular.module('HuDeySell', [
 	$locationProvider.html5Mode(false);
 }).constant('APP_NAME', 'Hu Dey Sell')
   .constant('APP_VERSION', '0.1')
-  .constant('API_URL', 'localhost:3000');
+  .constant('NATION', 'Nigeria')
+  .constant('API_URL', 'http://localhost:3000/');

@@ -1,0 +1,1 @@
+json.(ad, :id, :creator_name, :creator_email, :creator_phone, :description, :price)

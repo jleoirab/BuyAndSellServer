@@ -1,7 +1,12 @@
 class StatesController < ApplicationController
 	# GET /state/
 	def index
-		@states = State.all
+		@states = []
+		if params[:nation] && params[:nation] != ""
+			nation_name = params[:nation]
+			nation = Nation.find_by_name(nation_name)
+			@states = nation.states.all
+		end
 	end
 
 	# GET /state/:id
