@@ -1,16 +1,19 @@
 Rails.application.routes.draw do
 
-  resources :nations, only: [:index] do
-    resources :states, only: [:index] do
-      resources :towns, only: [:index] do
-        resources :ads
-      end
-    end
-  end
+  # resources :nations, only: [:index] do
+  #   resources :states, only: [:index] do
+  #     resources :towns, only: [:index] do
+  #       resources :ads
+  #     end
+  #   end
+  # end
 
-  get 'states' => 'states#index'
-  get 'towns_for_state' => 'towns#index'
-  post 'create_ad' => 'ads#create'
+  get 'api/states' => 'states#index'
+  get 'api/towns_for_state' => 'towns#index'
+  get 'api/get_ads_for_town' => 'ads#index'
+  get 'api/show_ad' => 'ads#show'
+  post 'api/create_ad' => 'ads#create'
+  match '*path' => 'home#index',  via: [:post, :get, :update, :delete]
   root 'home#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

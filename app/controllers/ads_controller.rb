@@ -16,71 +16,84 @@ class AdsController < ApplicationController
 
     # GET
     def index
-        @nation = Nation.find(nation_id)
-        @state  = @nation.states.find(state_id)
-        @town   = @state.towns.find(town_id)
+        nation = Nation.find_by_name(nation_name)
+        state  = nation.states.find_by_name(state_name)
+        town   = state.towns.find_by_name(town_name)
 
-        @ads    = @town.ads.all
+        @ads    = town.ads.all
     end
 
     # GET
     def show
-        @nation = Nation.find(nation_id)
-        @state  = @nation.states.find(state_id)
-        @town   = @state.towns.find(town_id)
+        errors = {'errors' => []}
+        @ad = Ad.find(ad_id)
 
-        @ad     = @town.ads.find(ad_id)
+        if @ad.errors.any?
+            errors['errors'] = @ad.errors.full_messages
+
+            respond_to do |format|
+                format.any { render json: errors, status: :not_found }
+            end
+        end
     end
 
     # PATCH
     def update
-        @nation = Nation.find(nation_id)
-        @state  = @nation.states.find(state_id)
-        @town   = @state.towns.find(town_id)
+        # @nation = Nation.find(nation_id)
+        # @state  = @nation.states.find(state_id)
+        # @town   = @state.towns.find(town_id)
 
-        @ad     = @town.ads.find(ad_id)
+        # @ad     = @town.ads.find(ad_id)
 
-        @ad.update(ad_params)
+        # @ad.update(ad_params)
     end
 
     # POST
     def create
-
-        if chech_if_param
-            nation_name = params[:nation]
-            state_name = params[:state]
-            town_name = params[:town]
-
+        @ad = Ad.new
+        errors = {'errors'=> []}
+        status = chech_if_param
+        if status == true
             nation = Nation.find_by_name(nation_name)
             state = nation.states.find_by_name(state_name)
             town = state.towns.find_by_name(town_name)
             @ad = town.ads.create(ad_params)
+            if @ad.errors.any?
+                errors['errors'] = @ad.errors.full_messages
+            end
+        else
+            errors['errors'] = status
         end
-        render plain: params[:ad].inspect       
+
+        if errors['errors'].any?
+            respond_to do |format|
+                format.any { render json: errors, status: :unprocessable_entity }
+            end
+        end 
     end
 
     # DELETE
     def destroy
-        @nation = Nation.find(nation_id)
-        @state  = @nation.states.find(state_id)
-        @town   = @state.towns.find(town_id)
+        # @nation = Nation.find(nation_id)
+        # @state  = @nation.states.find(state_id)
+        # @town   = @state.towns.find(town_id)
 
-        @ad     = @town.ads.find(ad_id)
+        # @ad     = @town.ads.find(ad_id)
 
-        @ad.destroy
+        # @ad.destroy
     end
 
     private    
-        def nation_id
-            params[:nation_id]
+        def nation_name
+            params[:nation]
         end
 
-        def state_id
-            params[:state_id]
+        def state_name
+            params[:state]
         end
 
-        def town_id
-            params[:town_id]
+        def town_name
+            params[:town]
         end
 
         def ad_id
@@ -102,8 +115,24 @@ class AdsController < ApplicationController
         end
 
         def chech_if_param
-            return (params[:nation] && params[:nation] != "" &&
-            params[:state] && params[:state] != "" && params[:town] &&
-            params[:town] != "")
+            retval = true
+            errors = []
+
+            if !nation_name || nation_name == ""
+                retval = false
+                errors << "No Value for Required Parameter (Nation)"
+            end
+
+            if !state_name || state_name == ""
+                retval = false
+                errors << "No Value for Required Parameter (State)"
+            end
+
+            if !town_name || town_name == ""
+                retval = false
+                errors << "No Value for Required Parameter (Town)"
+            end
+            
+            return retval ? retval : errors
         end
 end

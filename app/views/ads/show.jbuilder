@@ -1,1 +1,1 @@
-json.ad @ad partial: 'ad' as: :ad
+json.(@ad, :creator_email, :creator_phone, :description, :price)

@@ -89,12 +89,14 @@ huDeySell.service('HuDeySellAPIService', ['$http', '$log', 'API_URL', 'NATION', 
 			params["nation"] = NATION;
 			$http.post(url, params).success(function(data, status, header) {
 				if(validateFunc(success)) {
-					success(data, status, header);
+					// success(data, status, header);
 				}
+				console.log(data)
 			}).error(function(data, status, header) {
 				if(validateFunc(error)) {
-					error(data, status, header);
+					// error(data, status, header);
 				}
+				console.log(header)
 			});	
 		}
 

@@ -1,7 +1,7 @@
 huDeySell.controller('NewAdController', function($scope, HuDeySellAPIService){
 	$scope.error = {
 		any: false, 
-		type: ""
+		type: []
 	};
 
 	$scope.buyOrSell = "buying";
@@ -18,27 +18,21 @@ huDeySell.controller('NewAdController', function($scope, HuDeySellAPIService){
 	var validateInput = function() {
 		error = {
 			any: false,
-			type: ""
+			type: []
 		};
 
 		var input = $scope.adName.split(" ");
 		if (input.length < 2) {
 			if(input[0] == "") {
 				error.any = true;
-				error.type = "No name for ad.";
+				error.type.push("No name for ad.");
 			}
-
-			return error;
 		}
 
 		if ($scope.buyOrSell === "selling") {
 			if(!angular.isDefined($scope.adPrice)) {
-				error = {
-					any: true,
-					type: 'Price is not a number.'
-				}
-
-				return error;
+				error.any= true;
+				error.type.push('Price is not a number.');
 			}
 		}
 
@@ -46,10 +40,8 @@ huDeySell.controller('NewAdController', function($scope, HuDeySellAPIService){
 		if (input.length < 2) {
 			if(input[0] == "") {
 				error.any = true;
-				error.type = "No Description for ad.";
+				error.type.push("No Description for ad.");
 			}
-
-			return error;
 		}
 
 		// CRITICAL || Need better Validation for Email.
@@ -57,30 +49,24 @@ huDeySell.controller('NewAdController', function($scope, HuDeySellAPIService){
 		if (input.length < 2) {
 			if(input[0] == "") {
 				error.any = true;
-				error.type = "Invalid email for ad.";
+				error.type.push("Invalid email for ad.");
 			}
-
-			return error;
 		}
 
 		input = $scope.town.split(" ");
 		if (input.length < 2) {
 			if(input[0] == "") {
 				error.any = true;
-				error.type = "No Town Entered.";
+				error.type.push("No Town Entered.");
 			}
-
-			return error;
 		}
 
 		input = $scope.state.split(" ");
 		if (input.length < 2) {
 			if(input[0] == "") {
 				error.any = true;
-				error.type = "No State Entered.";
+				error.type.push("No State Entered.");
 			}
-
-			return error;
 		}
 
 		return error;
@@ -89,13 +75,14 @@ huDeySell.controller('NewAdController', function($scope, HuDeySellAPIService){
 	var resetError = function() {
 		$scope.error = {
 			any: false,
-			type: ""
+			type:[]
 		}
 	};
 
 	$scope.create = function() {
 		$scope.error = validateInput();
 		if($scope.error.any){
+			console.log("error")
 			return;
 		}
 		var adName = $scope.adName;
@@ -125,6 +112,8 @@ huDeySell.controller('NewAdController', function($scope, HuDeySellAPIService){
 				console.log(status);
 		}, function(data, status, header) {
 			console.log(data);
+			$scope.error.type.push(data.errors);
+			$socpe.error.any = true;
 		});
 
 	};

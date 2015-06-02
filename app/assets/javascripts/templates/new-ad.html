@@ -1,7 +1,7 @@
 <div class="error container-fluid" ng-if="error.any">
 	<p><strong>The following error has prevented your ad from being created: </strong></p>
 	<ul>
-		<li>{{error.type}}</li>
+		<li ng-repeat="err in error.type">{{err}}</li>
 	</ul>
 
 	<button class="btn btn-default" ng-click="closeErrors()">Close</button>
