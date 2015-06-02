@@ -1,4 +1,4 @@
-huDeySell.controller('NewAdController', function($scope, HuDeySellAPIService){
+huDeySell.controller('NewAdController', function($scope, $location, HuDeySellAPIService){
 	$scope.error = {
 		any: false, 
 		type: []
@@ -109,7 +109,8 @@ huDeySell.controller('NewAdController', function($scope, HuDeySellAPIService){
 
 		HuDeySellAPIService.createAd(params, 
 			function(data, status, header){
-				console.log(status);
+				console.log(data);
+				$location.path('/' + data.id);
 		}, function(data, status, header) {
 			console.log(data);
 			$scope.error.type.push(data.errors);

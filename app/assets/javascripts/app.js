@@ -11,6 +11,10 @@ huDeySell = angular.module('HuDeySell', [
 		templateUrl: 'new-ad.html',
 		controller: 'NewAdController'
 	})
+	.when('/:ad_id', {
+		templateUrl: 'show-ad.html',
+		controller: 'ShowAdController'
+	})
 	.otherwise({
 		redirectTo: '/'
 	});

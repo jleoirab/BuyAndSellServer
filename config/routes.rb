@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get 'api/states' => 'states#index'
   get 'api/towns_for_state' => 'towns#index'
   get 'api/get_ads_for_town' => 'ads#index'
-  get 'api/show_ad' => 'ads#show'
+  get 'api/show_ad/:id' => 'ads#show'
   post 'api/create_ad' => 'ads#create'
   match '*path' => 'home#index',  via: [:post, :get, :update, :delete]
   root 'home#index'

@@ -132,24 +132,21 @@ huDeySell.service('HuDeySellAPIService', ['$http', '$log', 'API_URL', 'NATION', 
 		self.getAd = function(params, success, error) {
 			var validation = validateParams(params);
 
-			if(validation != "") {
-				if(validateFunc(error)) {
-					error(validation);
-				}
-				return;
-			}
+			// if(validation != "") {
+			// 	if(validateFunc(error)) {
+			// 		error(validation);
+			// 	}
+			// 	return;
+			// }
 
-			if(!angular.isDefined(params.id) || !angular.isNumber(params.id)){
-				if(validateFunc(error)) {
-					error("Invalid Params - ad id (id)");
-				}
+			// if(!angular.isDefined(params.id) || !angular.isNumber(params.id)){
+			// 	if(validateFunc(error)) {
+			// 		error("Invalid Params - ad id (id)");
+			// 	}
 
-				return;
-			}
-			var url = API_URL + params.nation_id + '/states/' 
-					+ params.state_id + '/towns/' + params.town_id + '/ads/'
-					+ params.id;
-
+			// 	return;
+			// }
+			var url = API_URL +  '/show_ad/' + params.id;
 
 			$http.get(url).
 				success(function(data, status, header) {
