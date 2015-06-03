@@ -16,21 +16,39 @@ class AdsController < ApplicationController
 
     # GET
     def index
-        nation = Nation.find_by_name(nation_name)
-        state  = nation.states.find_by_name(state_name)
-        town   = state.towns.find_by_name(town_name)
+        errors = {'errors'=> []}
+        status = chech_if_param
+        if status == true
+            nation = Nation.find_by_name(nation_name)
+            state  = nation.states.find_by_name(state_name)
+            town   = state.towns.find_by_name(town_name)
 
-        @ads    = town.ads.all
+            @ads    = town.ads.all
+        else 
+            errors['errors'] = status
+
+            respond_to do |format|
+                format.any { render json: errors, status: :not_found }
+            end
+        end
     end
 
     # GET
     def show
         errors = {'errors' => []}
-        @ad = Ad.find(ad_id)
+        status = check_if_id
 
-        if @ad.errors.any?
-            errors['errors'] = @ad.errors.full_messages
+        if status == true
+            @ad = Ad.find(ad_id)
 
+            if @ad.errors.any?
+                errors['errors'] = @ad.errors.full_messages
+            end
+        else 
+            errors['errors'] = status
+        end
+
+        if errors['errors'].any?
             respond_to do |format|
                 format.any { render json: errors, status: :not_found }
             end
@@ -134,5 +152,16 @@ class AdsController < ApplicationController
             end
             
             return retval ? retval : errors
+        end
+
+        def check_if_id
+
+            if !ad_id || ad_id == ""
+                errors = []
+                errors << "No Value for Required Parameter ( Ad id)"  
+                return errors
+            else
+                return true
+            end
         end
 end

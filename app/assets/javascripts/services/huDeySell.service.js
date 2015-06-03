@@ -104,18 +104,19 @@ huDeySell.service('HuDeySellAPIService', ['$http', '$log', 'API_URL', 'NATION', 
 		self.getAdsForTown = function(params, success, error) {
 			var validation = validateParams(params);
 
-			if( validation != "") {
-				if(validateFunc(error)) {
-					error(validation)
-				}
-				return;
-			}
+			// if( validation != "") {
+			// 	if(validateFunc(error)) {
+			// 		error(validation)
+			// 	}
+			// 	return;
+			// }
 
-			var url = API_URL + params.nation_id + '/states/' 
-					+ params.state_id + '/towns/' + params.town_id + '/ads/';
+			var url = API_URL + 'get_ads_for_town'
 
 
-			$http.get(url).
+			$http.get(url, {
+					params: params
+				}).
 				success(function(data, status, header) {
 					if (validateFunc(success)){
 						success(data);

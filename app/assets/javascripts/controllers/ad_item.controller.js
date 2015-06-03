@@ -8,7 +8,6 @@ huDeySell.controller('ShowAdController', function($scope, $location, $routeParam
 	};
 
 	HuDeySellAPIService.getAd(params, function(data, status, header){
-		console.log(data)
 		$scope.ad.id = $routeParams.ad_id;
 		$scope.ad.adDescription = data.description;
 		$scope.ad.adPrice = data.price;

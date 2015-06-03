@@ -1,5 +1,7 @@
-huDeySell.controller('AppController', function($scope, $location, NATION, HuDeySellAPIService){
+huDeySell.controller('AppController', function($scope, $location, NATION, HuDeySellAPIService, HuDeySellTempCache){
 	//Get location. To be added in later update
+	$scope.ds_for_town = HuDeySellTempCache.get("last-search-result", true).ads || [];
+
 	var validateString = function(string) {
 		if(angular.isDefined(string) && angular.isString(string) && string != "") {
 			console.log(string);
@@ -23,17 +25,24 @@ huDeySell.controller('AppController', function($scope, $location, NATION, HuDeyS
 		var state = $scope.state;
 		var town = $scope.town;
 		var category = $scope.category;
-
 		if(validateString(state) /*&& validateString(town) && validateString(category)*/) {
-			$scope.state = "";
+			// $scope.state = "";
 			// $scope.town = "";
 			// $scope.category = "";
 
 			params['state'] = state;
+			params['town'] = town;
 
-			HuDeySellAPIService.getTownsForState(params,
+			// HuDeySellAPIService.getTownsForState(params,
+			// 	function(data, status, header) {
+			// 		console.log(data);
+			// 	}, function(data, status, header) {
+			// 		console.log(data, status, header);
+			// 	});
+			HuDeySellAPIService.getAdsForTown(params,
 				function(data, status, header) {
-					console.log(data);
+					// HuDeySellTempCache.set("last-search-result", data, true);
+					$scope.ds_for_town = data.ads;
 				}, function(data, status, header) {
 					console.log(data, status, header);
 				});
@@ -65,6 +74,4 @@ huDeySell.controller('AppController', function($scope, $location, NATION, HuDeyS
 	$scope.createNewAd = function() {
 		$location.path('/create-ad');
 	};
-
-	
 });	

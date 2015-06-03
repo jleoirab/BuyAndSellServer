@@ -19,7 +19,7 @@ huDeySell = angular.module('HuDeySell', [
 		redirectTo: '/'
 	});
 
-	$locationProvider.html5Mode(true);
+	$locationProvider.html5Mode(false);
 }).constant('APP_NAME', 'Hu Dey Sell')
   .constant('APP_VERSION', '0.1')
   .constant('NATION', 'Nigeria')
