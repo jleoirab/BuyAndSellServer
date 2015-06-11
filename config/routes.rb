@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   get 'api/get_ads_for_town' => 'ads#index'
   get 'api/show_ad/:id' => 'ads#show'
   post 'api/create_ad' => 'ads#create'
-  match '*path' => 'home#index',  via: [:post, :get, :update, :delete]
+  match '/*path' => redirect("/?goto=%{path}"), via: [:get, :post, :update, :delete, :put]
   root 'home#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
