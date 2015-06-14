@@ -11,6 +11,8 @@ class AdsController < ApplicationController
     # - :description
     # - :price
     # - :town_id
+    # - :ads_per_page
+    # - :current_page
     # ===============================================
 
 
@@ -18,12 +20,33 @@ class AdsController < ApplicationController
     def index
         errors = {'errors'=> []}
         status = chech_if_param
+        @ads_per_page = 10
+        @current_page = 2
         if status == true
             nation = Nation.find_by_name(nation_name)
             state  = nation.states.find_by_name(state_name)
             town   = state.towns.find_by_name(town_name)
 
-            @ads    = town.ads.all
+            if ads_per_page
+                @ads_per_page = ads_per_page
+            end
+
+            if current_page
+                @current_page = current_page
+            end
+
+            ads = town.ads.all
+            size = ads.size
+            @number_of_pages = (size.to_f/@ads_per_page).ceil
+
+            if @current_page < 0 || @current_page >= @number_of_pages
+                @current_page = 0
+            end
+
+            start = (@current_page * @ads_per_page)
+            
+            @ads = ads.slice(start, [@ads_per_page, size - start].min)
+
         else 
             errors['errors'] = status
 
@@ -116,6 +139,14 @@ class AdsController < ApplicationController
 
         def ad_id
             params[:id]
+        end
+
+        def ads_per_page
+            params[:ads_per_page]
+        end
+
+        def current_page
+            params[:current_page]
         end
 
         def keys_for_ads
